@@ -1,0 +1,30 @@
+#/APPNICENAME=Wallabag
+#/APPDESCRIPTION=Online Bookmarker
+services:
+  wallabag:
+    image: wallabag/wallabag
+    environment:
+      - MYSQL_ROOT_PASSWORD=${WALLABAG_MYSQL_ROOT_PASSWORD}
+      - SYMFONY__ENV__DATABASE_DRIVER=${WALLABAG_DATABASE_DRIVER}
+      - SYMFONY__ENV__DATABASE_HOST=${WALLABAG_DATABASE_HOST}
+      - SYMFONY__ENV__DATABASE_PORT=${WALLABAG_DATABASE_PORT}
+      - SYMFONY__ENV__DATABASE_NAME=${WALLABAG_DATABASE_NAME}
+      - SYMFONY__ENV__DATABASE_USER=${WALLABAG_DATABASE_USER}
+      - SYMFONY__ENV__DATABASE_PASSWORD=${WALLABAG_DATABASE_PASSWORD}
+      - SYMFONY__ENV__DATABASE_CHARSET=${WALLABAG_DATABASE_CHARSET}
+      - SYMFONY__ENV__MAILER_HOST=${WALLABAG_MAILER_HOST}
+      - SYMFONY__ENV__MAILER_USER=${WALLABAG_MAILER_USER}
+      - SYMFONY__ENV__MAILER_PASSWORD=${WALLABAG_MAILER_PASSWORD}
+      - SYMFONY__ENV__FROM_EMAIL=${WALLABAG_FROM_EMAIL}
+      - SYMFONY__ENV__DOMAIN_NAME=${WALLABAG_DOMAIN_NAME}
+    volumes:
+      - ${DOCKERCONFDIR}/wallabag:/var/www/wallabag/data
+      - ${DOCKERCONFDIR}/wallabag/images:/var/www/wallabag/web/assets/images
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${WALLABAG_DATABASE_PASSWORD}
+    volumes:
+      - ${DOCKERCONFDIR}/wallabag/sqldata:/var/lib/mysql
+  redis:
+    image: redis:alpine
