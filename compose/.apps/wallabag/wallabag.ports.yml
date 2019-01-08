@@ -1,0 +1,4 @@
+services:
+  couchpotato:
+    ports:
+      - "${WALLABAG_PORT_80}:80"
