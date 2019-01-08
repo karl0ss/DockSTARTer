@@ -20,11 +20,3 @@ services:
     volumes:
       - ${DOCKERCONFDIR}/wallabag:/var/www/wallabag/data
       - ${DOCKERCONFDIR}/wallabag/images:/var/www/wallabag/web/assets/images
-  db:
-    image: mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=${WALLABAG_DATABASE_PASSWORD}
-    volumes:
-      - ${DOCKERCONFDIR}/wallabag/sqldata:/var/lib/mysql
-  redis:
-    image: redis:alpine
