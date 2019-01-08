@@ -3,6 +3,7 @@
 services:
   wallabag:
     image: wallabag/wallabag
+    container_name: wallabag
     environment:
       - MYSQL_ROOT_PASSWORD=${WALLABAG_MYSQL_ROOT_PASSWORD}
       - SYMFONY__ENV__DATABASE_DRIVER=${WALLABAG_DATABASE_DRIVER}
