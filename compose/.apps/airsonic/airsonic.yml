@@ -2,7 +2,7 @@
 #/APPDESCRIPTION=Web-based media streamer providing ubiquitious access to your music
 services:
   airsonic:
-    image: linuxserver/airsonic
+    image: airsonic/airsonic
     container_name: airsonic
     restart: unless-stopped
     environment:
@@ -13,8 +13,8 @@ services:
       - TZ=${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DOCKERCONFDIR}/airsonic:/config
+      - ${DOCKERCONFDIR}/airsonic/data:/data
       - ${DOCKERSHAREDDIR}:/shared
       - ${MEDIADIR_MUSIC}:/music
-      - ${MEDIADIR_MUSIC}/playlists:/playlists
-      - ${MEDIADIR_MUSIC}/podcasts:/podcasts
+      - ${DOCKERCONFDIR}/airsonic/playlists:/playlists
+      - ${DOCKERCONFDIR}/airsonic/podcasts:/podcasts
