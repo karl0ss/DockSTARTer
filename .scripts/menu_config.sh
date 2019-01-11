@@ -26,6 +26,7 @@ menu_config() {
             ;;
         "Select Apps ")
             run_script 'env_update'
+			run_script 'menu_config_folder'
             run_script 'menu_app_select'
             run_script 'generate_yml'
             run_script 'run_compose'

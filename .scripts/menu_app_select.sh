@@ -15,19 +15,19 @@ menu_app_select() {
         APPSUPPORTED=false
         local APPNICENAME
         local APPDESCRIPTION
-        if [[ -d ${SCRIPTPATH}/compose/.apps/${FILENAME}/ ]]; then
-            if [[ -f ${SCRIPTPATH}/compose/.apps/${FILENAME}/${FILENAME}.yml ]]; then
-                APPNICENAME=$(grep '^#/APPNICENAME=' "${SCRIPTPATH}/compose/.apps/${FILENAME}/${FILENAME}.yml" | cut -c15- || echo "${APPNAME}")
-                APPDESCRIPTION=$(grep '^#/APPDESCRIPTION=' "${SCRIPTPATH}/compose/.apps/${FILENAME}/${FILENAME}.yml" | cut -c18- || echo "! Missing description !")
+        if [[ -d ${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/ ]]; then
+            if [[ -f ${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/${FILENAME}.yml ]]; then
+                APPNICENAME=$(grep '^#/APPNICENAME=' "${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/${FILENAME}.yml" | cut -c15- || echo "${APPNAME}")
+                APPDESCRIPTION=$(grep '^#/APPDESCRIPTION=' "${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/${FILENAME}.yml" | cut -c18- || echo "! Missing description !")
                 if [[ ${ARCH} == "aarch64" ]]; then
-                    if [[ -f ${SCRIPTPATH}/compose/.apps/${FILENAME}/${FILENAME}.arm64.yml ]]; then
+                    if [[ -f ${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/${FILENAME}.arm64.yml ]]; then
                         APPSUPPORTED=true
-                    elif [[ -f ${SCRIPTPATH}/compose/.apps/${FILENAME}/${FILENAME}.armhf.yml ]]; then
+                    elif [[ -f ${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/${FILENAME}.armhf.yml ]]; then
                         APPSUPPORTED=true
                     fi
                 fi
                 if [[ ${ARCH} == "armv7l" ]]; then
-                    if [[ -f ${SCRIPTPATH}/compose/.apps/${FILENAME}/${FILENAME}.armhf.yml ]]; then
+                    if [[ -f ${SCRIPTPATH}/compose/.apps/${TESTFOLDER}/${FILENAME}/${FILENAME}.armhf.yml ]]; then
                         APPSUPPORTED=true
                     fi
                 fi
