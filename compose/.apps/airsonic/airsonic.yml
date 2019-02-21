@@ -12,8 +12,8 @@ services:
       - TZ=${TZ}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DOCKERCONFDIR}/airsonic/data:airsonic/data
+      - ${DOCKERCONFDIR}/airsonic/data:/data
       - ${DOCKERSHAREDDIR}:/shared
       - ${MEDIADIR_MUSIC}:/music
-      - ${DOCKERCONFDIR}/airsonic/playlists:airsonic/playlists
-      - ${DOCKERCONFDIR}/airsonic/podcasts:airsonic/podcasts
+      - ${DOCKERCONFDIR}/airsonic/playlists:/playlists
+      - ${DOCKERCONFDIR}/airsonic/podcasts:/podcasts
