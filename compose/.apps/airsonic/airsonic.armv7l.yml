@@ -1,3 +1,4 @@
 services:
   airsonic:
-    image: linuxserver/airsonic
+    image: airsonic/airsonic
+
