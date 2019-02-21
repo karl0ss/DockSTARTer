@@ -1,5 +1,5 @@
-#/APPNICENAME=Jdownloader2_GUI
-#/APPDESCRIPTION=JDownloader Download Manager with GUI
+# APPNICENAME=Jdownloader2_GUI
+# APPDESCRIPTION=JDownloader Download Manager with GUI
 services:
   jdownloader2_gui:
     container_name: jdownloader2_gui
