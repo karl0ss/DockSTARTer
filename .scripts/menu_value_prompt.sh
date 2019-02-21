@@ -24,6 +24,14 @@ menu_value_prompt() {
             SYSTEM_VAL="${DETECTED_HOMEDIR}/.docker/config"
             VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
             ;;
+        DOCKERGID)
+            SYSTEM_VAL=$(cut -d: -f3 < <(getent group docker))
+            VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            ;;
+        DOCKERHOSTNAME)
+            SYSTEM_VAL=${HOSTNAME}
+            VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            ;;
         DOCKERSHAREDDIR)
             SYSTEM_VAL="${DETECTED_HOMEDIR}/.docker/config/shared"
             VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
@@ -32,25 +40,31 @@ menu_value_prompt() {
             SYSTEM_VAL="${DETECTED_HOMEDIR}/Downloads"
             VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
             ;;
-        MEDIADIR_BOOKS)
-            SYSTEM_VAL="${DETECTED_HOMEDIR}/Books"
+        LAN_NETWORK)
+            # https://github.com/tom472/mediabox/commit/d6a3317c9513ac9907715c76fb4459cba426da18
+            # https://stackoverflow.com/questions/13322485/how-to-get-the-primary-ip-address-of-the-local-machine-on-linux-and-os-x#comment89955893_25851186
+            SYSTEM_VAL=$(ip a | grep -Po "$(ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p')\/\d+" | sed 's/[0-9]*\//0\//')
             VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            ;;
+        MEDIADIR_BOOKS)
+            HOME_VAL="${DETECTED_HOMEDIR}/Books"
+            VALUEOPTIONS+=("Use Home " "${HOME_VAL}")
             ;;
         MEDIADIR_COMICS)
-            SYSTEM_VAL="${DETECTED_HOMEDIR}/Comics"
-            VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            HOME_VAL="${DETECTED_HOMEDIR}/Comics"
+            VALUEOPTIONS+=("Use Home " "${HOME_VAL}")
             ;;
         MEDIADIR_MOVIES)
-            SYSTEM_VAL="${DETECTED_HOMEDIR}/Movies"
-            VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            HOME_VAL="${DETECTED_HOMEDIR}/Movies"
+            VALUEOPTIONS+=("Use Home " "${HOME_VAL}")
             ;;
         MEDIADIR_MUSIC)
-            SYSTEM_VAL="${DETECTED_HOMEDIR}/Music"
-            VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            HOME_VAL="${DETECTED_HOMEDIR}/Music"
+            VALUEOPTIONS+=("Use Home " "${HOME_VAL}")
             ;;
         MEDIADIR_TV)
-            SYSTEM_VAL="${DETECTED_HOMEDIR}/TV"
-            VALUEOPTIONS+=("Use System " "${SYSTEM_VAL}")
+            HOME_VAL="${DETECTED_HOMEDIR}/TV"
+            VALUEOPTIONS+=("Use Home " "${HOME_VAL}")
             ;;
         PGID)
             SYSTEM_VAL="${DETECTED_PGID}"
@@ -128,6 +142,10 @@ menu_value_prompt() {
             ;;
     esac
 
+    if [[ -n ${SYSTEM_VAL:-} ]]; then
+        VALUEDESCRIPTION="\n\n System detected values are recommended.${VALUEDESCRIPTION}"
+    fi
+
     local SELECTEDVALUE
     if [[ ${CI:-} == true ]] && [[ ${TRAVIS:-} == true ]]; then
         SELECTEDVALUE="Keep Current "
@@ -139,6 +157,9 @@ menu_value_prompt() {
     case "${SELECTEDVALUE}" in
         "Keep Current ")
             INPUT=${CURRENT_VAL}
+            ;;
+        "Use Home ")
+            INPUT=${HOME_VAL}
             ;;
         "Use Default ")
             INPUT=${DEFAULT_VAL}
@@ -199,7 +220,7 @@ menu_value_prompt() {
                     menu_value_prompt "${SET_VAR}"
                 elif [[ ${INPUT} == ~* ]]; then
                     local CORRECTED_DIR
-                    CORRECTED_DIR="${DETECTED_HOMEDIR}${INPUT/*~/}"
+                    CORRECTED_DIR="${DETECTED_HOMEDIR}${INPUT#*~}"
                     local ANSWER
                     set +e
                     ANSWER=$(

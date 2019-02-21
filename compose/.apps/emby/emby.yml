@@ -1,10 +1,15 @@
-#/APPNICENAME=Emby
-#/APPDESCRIPTION=Organize, play, and stream audio and video
+# APPNICENAME=Emby
+# APPDESCRIPTION=Organize, play, and stream audio and video
 services:
   emby:
-    image: emby/embyserver:latest
     container_name: emby
+    hostname: ${DOCKERHOSTNAME}
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
     environment:
       - GID=${PGID}
       - GIDLIST=${PGID}

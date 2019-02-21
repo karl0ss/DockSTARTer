@@ -7,7 +7,7 @@ config_globals() {
     local APPNAME
     APPNAME="Globals"
     local VARNAMES
-    VARNAMES=(TZ PUID PGID DOCKERCONFDIR DOWNLOADSDIR MEDIADIR_BOOKS MEDIADIR_COMICS MEDIADIR_MOVIES MEDIADIR_MUSIC MEDIADIR_TV DOCKERSHAREDDIR)
+    VARNAMES=(TZ DOCKERHOSTNAME PUID PGID DOCKERCONFDIR DOWNLOADSDIR MEDIADIR_BOOKS MEDIADIR_COMICS MEDIADIR_MOVIES MEDIADIR_MUSIC MEDIADIR_TV DOCKERSHAREDDIR)
     local APPVARS
     APPVARS=$(for v in "${VARNAMES[@]}"; do echo "${v}=$(run_script 'env_get' "${v}")"; done)
 
@@ -20,7 +20,7 @@ config_globals() {
     set -e
     if [[ ${ANSWER} != 0 ]]; then
         while IFS= read -r line; do
-            SET_VAR=${line/=*/}
+            SET_VAR=${line%%=*}
             run_script 'menu_value_prompt' "${SET_VAR}" || return 1
         done < <(echo "${APPVARS}")
     fi
