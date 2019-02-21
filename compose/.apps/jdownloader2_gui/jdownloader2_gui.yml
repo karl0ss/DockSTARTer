@@ -3,7 +3,6 @@
 services:
   jdownloader2_gui:
     container_name: jdownloader2_gui
-    image: jlesage/jdownloader-2
     restart: unless-stopped
     environment:
       - PGID=${PGID}
