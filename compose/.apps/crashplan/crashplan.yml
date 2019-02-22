@@ -1,4 +1,4 @@
-# APPNICENAME=CrashPlan PRO
+# APPNICENAME=CrashPlan
 # APPDESCRIPTION=Cloud Backup to CrashPlan
 services:
   crashplan:
