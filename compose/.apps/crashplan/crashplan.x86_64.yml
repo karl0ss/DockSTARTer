@@ -1,0 +1,3 @@
+services:
+  crashplan:
+    image: jlesage/crashplan-pro:latest

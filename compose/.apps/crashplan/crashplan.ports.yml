@@ -1,0 +1,4 @@
+services:
+  crashplan:
+    ports:
+      - "${CRASHPLAN_PORT_5800}:5800"

@@ -1,0 +1,23 @@
+# APPNICENAME=CrashPlan PRO
+# APPDESCRIPTION=Cloud Backup to CrashPlan
+services:
+  crashplan:
+    container_name: CrashPlan PRO
+    hostname: ${DOCKERHOSTNAME}
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    environment:
+      - GROUP_ID=${PGID}
+      - GIDLIST=${PGID}
+      - TZ=${TZ}
+      - USER_ID=${PUID}
+      - VNC_PASSWORD=${CRASHPLAN_VNC_PASSWORD}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/crashplan:/config
+      - ${CRASHPLAN_STORAGE}:/storage
+      
