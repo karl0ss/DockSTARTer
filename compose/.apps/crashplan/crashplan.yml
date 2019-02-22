@@ -2,7 +2,7 @@
 # APPDESCRIPTION=Cloud Backup to CrashPlan
 services:
   crashplan:
-    container_name: CrashPlan PRO
+    container_name: CrashPlan_PRO
     hostname: ${DOCKERHOSTNAME}
     restart: unless-stopped
     logging:
