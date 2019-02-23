@@ -18,4 +18,5 @@ services:
       - VNC_PASSWORD=${CRASHPLAN_VNC_PASSWORD}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${DOCKERCONFDIR}/crashplan:/config      
+      - ${DOCKERCONFDIR}/crashplan:/config  
+      - ${CRASHPLAN_STORAGE}:/storage
